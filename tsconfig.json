@@ -11,6 +11,12 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    "paths": {
+      "ngx-custom-tour": [
+        "dist/ngx-custom-tour/ngx-custom-tour",
+        "dist/ngx-custom-tour"
+      ]
+    },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,

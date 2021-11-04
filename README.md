@@ -1,27 +1,110 @@
-# NgxCustomTour
+This is new a bit extended version of 
+[https://github.com/miraxes/angular-custom-tour](https://github.com/miraxes/angular-custom-tour).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.8.
+For versions less than Angular v6, please use older version of this library.
 
-## Development server
+# Usage
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* install `npm install ngx-custom-tour --save`
 
-## Code scaffolding
+In your module (app.module.ts)
+  ```typescript
+  import { NgxCustomTourModule } from 'ngx-custom-tour'
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  @NgModule({
+    ...
+    imports: [
+      ...
+      NgxCustomTourModule // Put here
+      ...
+    ]
+    ...
+  ]
+  ```
+Initialize it in your page component
 
-## Build
+> In case you want to init slider after pageload, you should use ngAfterViewInit
+  ```typescript
+  import { NgxCustomTourService } from 'ngx-custom-tour'
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  @Component({
+    ...
+    providers: [... NgxCustomTourService ... ],
+    ...
+  })
 
-## Running unit tests
+  class AppComponent {
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    constructor(public customTourService: NgxCustomTourService){ }
 
-## Running end-to-end tests
+    startTour() {
+      this.customTourService.initialize();
+    }
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+  }
+  ```
 
-## Further help
+  ```html
+  <!-- Bluring element insert on top of the page-->
+  <ngx-custom-tour-overlay></ngx-custom-tour-overlay>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  <!-- start TOUR -->
+  <button name="button" (click)="startTour()"> START!</button>
+
+  <!-- Each step could be placed at ANYWHERE -->
+  <div class="i-want-highlight-this" id="highlight-me"> WOW!</div>
+
+  <tour-step selector="highlight-me" [order]="3" position="right" title="title string">
+    <!-- ANY HTML HERE
+      NOTE: ONLY selector attribute is required! others is up to you
+    -->
+  </tour-step>
+  ```
+  ## NOTE:
+
+  > selector MUST BE unique, so you can highlight Element once
+
+## Styles
+
+You need to inject styles from `node_modules/ngx-custom-tour/styles/styles.scss`
+
+Feel free to import those styles directly to your scss
+Also, we added some scss variables to let you adjust styles just in one line.
+
+```
+$ct-overlay-opacity: rgba(0, 0, 0, .6) !default;
+$ct-header-font-size: 14px !default;
+$ct-container-min-width: 200px !default;
+$ct-primary-color: #00b2f2 !default;
+$ct-secondary-color: #8D0876 !default;
+```
+
+# Custom options Usage
+
+```typescript
+  startTour() {
+    this.customTourService.initialize({elementsDisabled: false}); // HintOptions
+  }
+```
+
+## HintOptions
+
+| option                     | default   | Usage  |
+| -------------------------- |:---------:| ------ |
+| elementsDisabled: boolean  | true      | Disabling highlightedElement (click) wont work|
+| dismissOnOverlay: boolean  | false     | Go to next step when clicking on overlay (close tour if this is last step)|
+| defaultPosition: string    | 'bottom'  | Position of tour step to highlightedElement |
+| defaultOrder: number       | 99        | Order of showing steps |
+| defaultLayer: number       | 15        | Distance between highlightedElement and step in px |
+| applyRelative: boolean     | true      | Applying position:relative to highlightedElement (disable in case you want to highlight absolute positioned elements) |
+
+
+##  Hint service events
+
+| event         | Description  |
+| ------------- | ------------ |
+| finish$       | When tour is finished |
+| showingStep$  | On each step show (Params > CurrentStep) |
+
+
+This module in active development mode, if you have any suggestions feel free to contact me.
