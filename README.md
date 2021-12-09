@@ -25,6 +25,8 @@ In your module (app.module.ts)
     ...
   ]
   ```
+Note: You'll need to import BrowserAnimationsModule too;
+
 Initialize it in your page component
 
 > In case you want to init slider after pageload, you should use ngAfterViewInit
