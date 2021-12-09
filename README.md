@@ -4,8 +4,8 @@ This is new a bit extended version of
 For versions less than Angular v6, please use older version of this library.
 
 [![Downloads](https://img.shields.io/npm/dt/ngx-custom-tour.svg?style=flat-square)](https://www.npmjs.com/package/ngx-custom-tour)
-[![Versions](https://img.shields.io/npm/v/ngx-custom-tour.svg?style=flat-square)]()
-[![License](https://img.shields.io/npm/l/ngx-custom-tour.svg?style=flat-square)]()
+[![Versions](https://img.shields.io/npm/v/ngx-custom-tour.svg?style=flat-square)](https://www.npmjs.com/package/ngx-custom-tour)
+[![License](https://img.shields.io/npm/l/ngx-custom-tour.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 # Usage
 
