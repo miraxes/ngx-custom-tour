@@ -16,9 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   exports: [
     NgxCustomTourComponent,
-    TourComponent,
-    CommonModule,
-    BrowserAnimationsModule
+    TourComponent
   ]
 })
 export class NgxCustomTourModule { }
