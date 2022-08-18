@@ -1,4 +1,4 @@
-This is new a bit extended version of 
+This is new a bit extended version of
 [https://github.com/miraxes/angular-custom-tour](https://github.com/miraxes/angular-custom-tour).
 
 For versions less than Angular v6, please use older version of this library.
@@ -77,13 +77,13 @@ You need to inject styles from `node_modules/ngx-custom-tour/styles/styles.scss`
 Feel free to import those styles directly to your scss
 Also, we added some scss variables to let you adjust styles just in one line.
 # Scss variables
-| variable                   | default           | 
-| -------------------------- |:-----------------:| 
-| $ct-overlay-opacity        | rgba(0, 0, 0, .6) | 
+| variable                   | default           |
+| -------------------------- |:-----------------:|
+| $ct-overlay-opacity        | rgba(0, 0, 0, .6) |
 | $ct-header-font-size       | 14px              |
 | $ct-container-min-width    | 200px             |
-| $ct-primary-color          | #00b2f2           | 
-| $ct-secondary-color        | #8D0876           | 
+| $ct-primary-color          | #00b2f2           |
+| $ct-secondary-color        | #8D0876           |
 
 # Custom options Usage
 
@@ -113,4 +113,4 @@ Also, we added some scss variables to let you adjust styles just in one line.
 | showingStep$  | On each step show (Params > CurrentStep) |
 
 
-This module in active development mode, if you have any suggestions feel free to contact me.
+This module in ~active~ development mode, if you have any suggestions feel free to contact me.
