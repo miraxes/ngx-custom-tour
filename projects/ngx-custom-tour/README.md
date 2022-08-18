@@ -7,6 +7,12 @@ For versions less than Angular v6, please use older version of this library.
 [![Versions](https://img.shields.io/npm/v/ngx-custom-tour.svg?style=flat-square)](https://www.npmjs.com/package/ngx-custom-tour)
 [![License](https://img.shields.io/npm/l/ngx-custom-tour.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
+# Versions
+| angular           | library     |
+| ----------------- |:-----------:|
+| below v12         | 0.1.6       |
+| v13               | 0.1.7       |
+
 # Usage
 
 * install `npm install ngx-custom-tour --save`

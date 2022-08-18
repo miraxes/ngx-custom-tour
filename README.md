@@ -1,7 +1,17 @@
-This is new a bit extended version of 
+This is new a bit extended version of
 [https://github.com/miraxes/angular-custom-tour](https://github.com/miraxes/angular-custom-tour).
 
 For versions less than Angular v6, please use older version of this library.
+
+[![Downloads](https://img.shields.io/npm/dt/ngx-custom-tour.svg?style=flat-square)](https://www.npmjs.com/package/ngx-custom-tour)
+[![Versions](https://img.shields.io/npm/v/ngx-custom-tour.svg?style=flat-square)](https://www.npmjs.com/package/ngx-custom-tour)
+[![License](https://img.shields.io/npm/l/ngx-custom-tour.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+# Versions
+| angular           | library     |
+| ----------------- |:-----------:|
+| below v12         | 0.1.6       |
+| v13               | 0.1.7       |
 
 # Usage
 
@@ -21,6 +31,8 @@ In your module (app.module.ts)
     ...
   ]
   ```
+Note: You'll need to import BrowserAnimationsModule too;
+
 Initialize it in your page component
 
 > In case you want to init slider after pageload, you should use ngAfterViewInit
@@ -70,14 +82,14 @@ You need to inject styles from `node_modules/ngx-custom-tour/styles/styles.scss`
 
 Feel free to import those styles directly to your scss
 Also, we added some scss variables to let you adjust styles just in one line.
-
-```
-$ct-overlay-opacity: rgba(0, 0, 0, .6) !default;
-$ct-header-font-size: 14px !default;
-$ct-container-min-width: 200px !default;
-$ct-primary-color: #00b2f2 !default;
-$ct-secondary-color: #8D0876 !default;
-```
+# Scss variables
+| variable                   | default           |
+| -------------------------- |:-----------------:|
+| $ct-overlay-opacity        | rgba(0, 0, 0, .6) |
+| $ct-header-font-size       | 14px              |
+| $ct-container-min-width    | 200px             |
+| $ct-primary-color          | #00b2f2           |
+| $ct-secondary-color        | #8D0876           |
 
 # Custom options Usage
 
@@ -107,4 +119,4 @@ $ct-secondary-color: #8D0876 !default;
 | showingStep$  | On each step show (Params > CurrentStep) |
 
 
-This module in active development mode, if you have any suggestions feel free to contact me.
+This module in ~active~ development mode, if you have any suggestions feel free to contact me.
