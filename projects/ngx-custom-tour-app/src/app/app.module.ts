@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxCustomTourModule } from 'ngx-custom-tour';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,8 +14,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     CommonModule,
-    NgxCustomTourModule,
-    BrowserAnimationsModule
+    NgxCustomTourModule
   ],
   providers: [],
   bootstrap: [AppComponent]

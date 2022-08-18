@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { trigger,state, style, transition, animate } from '@angular/animations';
 import { NgxCustomTourService } from './ngx-custom-tour.service';
 import { HintConfig } from './variables';
 import { tourHintAnimation } from './animations';

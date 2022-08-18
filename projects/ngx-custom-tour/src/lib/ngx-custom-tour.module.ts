@@ -4,7 +4,6 @@ import { NgxCustomTourComponent } from './ngx-custom-tour.component';
 import { TourComponent } from './tour.component';
 
 
-
 @NgModule({
   declarations: [
     NgxCustomTourComponent,
@@ -15,8 +14,7 @@ import { TourComponent } from './tour.component';
   ],
   exports: [
     NgxCustomTourComponent,
-    TourComponent,
-    CommonModule
+    TourComponent
   ]
 })
 export class NgxCustomTourModule { }

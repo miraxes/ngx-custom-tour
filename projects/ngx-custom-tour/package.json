@@ -1,6 +1,31 @@
 {
   "name": "ngx-custom-tour",
-  "version": "0.0.1",
+  "version": "0.1.6",
+  "description": "Easy to customize Angular 6+ tour",
+  "author": "Miraxes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miraxes/ngx-custom-tour"
+  },
+  "license": "MIT",
+  "keywords": [
+    "angular6",
+    "angular7",
+    "angular8",
+    "angular9",
+    "ng",
+    "ngx",
+    "hint",
+    "step",
+    "tour"
+  ],
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
   "peerDependencies": {
     "@angular/common": "^12.2.0",
     "@angular/core": "^12.2.0"
