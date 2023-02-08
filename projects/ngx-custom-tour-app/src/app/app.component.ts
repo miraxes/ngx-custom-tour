@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgxCustomTourService } from 'ngx-custom-tour';
+import { NgxCustomTourService, TourStepPosition } from '../../../ngx-custom-tour/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +8,7 @@ import { NgxCustomTourService } from 'ngx-custom-tour';
 })
 export class AppComponent {
   title = 'ngx-custom-tour-app';
+  tourStepPosition = TourStepPosition;
   constructor(public hintService: NgxCustomTourService) {
 
   }
