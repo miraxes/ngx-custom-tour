@@ -12,6 +12,11 @@ For versions less than Angular v6, please use older version of this library.
 | ----------------- |:-----------:|
 | below v12         | 0.1.6       |
 | v13               | 0.1.7       |
+| v14               | 1.0.0       |
+
+## Breaking change
+Starting from 1.x.x selector is not required anymore.
+Instead we have `order` which REQUIRED and must be UNIQUE.
 
 # Usage
 
@@ -106,7 +111,6 @@ Also, we added some scss variables to let you adjust styles just in one line.
 | elementsDisabled: boolean  | true      | Disabling highlightedElement (click) wont work|
 | dismissOnOverlay: boolean  | false     | Go to next step when clicking on overlay (close tour if this is last step)|
 | defaultPosition: string    | 'bottom'  | Position of tour step to highlightedElement |
-| defaultOrder: number       | 99        | Order of showing steps |
 | defaultLayer: number       | 15        | Distance between highlightedElement and step in px |
 | applyRelative: boolean     | true      | Applying position:relative to highlightedElement (disable in case you want to highlight absolute positioned elements) |
 

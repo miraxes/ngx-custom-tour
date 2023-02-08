@@ -1,6 +1,6 @@
 {
   "name": "ngx-custom-tour",
-  "version": "0.1.7",
+  "version": "1.0.0",
   "description": "Easy to customize Angular 6+ tour",
   "author": "Miraxes",
   "repository": {
@@ -12,11 +12,14 @@
     "angular6",
     "angular7",
     "angular8",
-    "angular9",
+    "angular12",
+    "angular13",
+    "angular14",
     "ng",
     "ngx",
     "hint",
     "step",
+    "onboarding",
     "tour"
   ],
   "scripts": {
@@ -27,8 +30,8 @@
     "test": "ng test"
   },
   "peerDependencies": {
-    "@angular/common": "^13.3.9",
-    "@angular/core": "^13.3.9"
+    "@angular/common": "^14.2.12",
+    "@angular/core": "^14.2.12"
   },
   "dependencies": {
     "tslib": "^2.3.0"
