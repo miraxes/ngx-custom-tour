@@ -12,6 +12,11 @@ For versions less than Angular v6, please use older version of this library.
 | ----------------- |:-----------:|
 | below v12         | 0.1.6       |
 | v13               | 0.1.7       |
+| v14               | 1.0.1       |
+
+## Breaking change
+Starting from 1.x.x selector is not required anymore.
+Instead we have `order` which REQUIRED and must be UNIQUE.
 
 # Usage
 
