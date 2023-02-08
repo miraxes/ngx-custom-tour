@@ -392,7 +392,7 @@
       <span>New Component</span>
     </button>
 
-    <button class="card card-small" (click)="selection.value = 'material'" tabindex="0">
+    <button class="card card-small class1" (click)="selection.value = 'material'" tabindex="0">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       <span>Angular Material</span>
     </button>
@@ -402,7 +402,7 @@
       <span>Add PWA Support</span>
     </button>
 
-    <button class="card card-small" (click)="selection.value = 'dependency'" tabindex="0">
+    <button class="card card-small class1" (click)="selection.value = 'dependency'" tabindex="0">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       <span>Add Dependency</span>
     </button>
@@ -412,7 +412,7 @@
       <span>Run and Watch Tests</span>
     </button>
 
-    <button class="card card-small" (click)="selection.value = 'build'" tabindex="0">
+    <button id="id4" class="card card-small" (click)="selection.value = 'build'" tabindex="0">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       <span>Build for Production</span>
     </button>
@@ -494,16 +494,18 @@
 <!-- start TOUR -->
 <button name="button" (click)="startTour()"> START!</button>
 
-<tour-step selector="id1" [order]="1" position="top" title="title 1111">
+<tour-step [order]="1" position="top" title="title 1111">
   123123
 </tour-step>
-<tour-step selector="id3" [order]="3" position="left" title="title 2222">
+<tour-step selector="#id2" [order]="2" position="left">
+  <iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+</iframe>
+</tour-step>
+<tour-step [selector]="['#id3', '#id4']" [order]="3" position="bottom" title="title 2222">
   TRSHASDAS
 </tour-step>
-<tour-step selector="id2" [order]="2" position="right">
-  <iframe width="420" height="315"
-src="https://www.youtube.com/embed/tgbNymZ7vqY">
-</iframe>
+<tour-step selector=".class1" [order]="4" position="top" title="title 2222">
+  Lorem ipsum dolor sit.
 </tour-step>
 
 

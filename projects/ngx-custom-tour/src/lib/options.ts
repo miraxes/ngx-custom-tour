@@ -1,12 +1,21 @@
 import { HintConfig } from './variables';
 
-export class HintOptions {
-    elementsDisabled: boolean = true;
-    defaultPosition: string = HintConfig.DEFAULT_POSITION;
-    defaultOrder: number = HintConfig.DEFAULT_ORDER;
-    defaultLayer: number = HintConfig.DEFAULT_PX_LAYER;
-    applyRelative: boolean = HintConfig.APPLY_RELATIVE;
-    stepTag: string = HintConfig.HINT_TAG;
-    dismissOnOverlay: boolean = HintConfig.DISMISS_ON_OVERLAY;
-    dismissible: boolean = HintConfig.DISMISSIBLE;
+export interface IHintOptions {
+    elementsDisabled?: boolean;
+    defaultPosition?: string;
+    defaultLayer?: number;
+    applyRelative?: boolean;
+    stepTag?: string;
+    dismissOnOverlay?: boolean;
+    dismissible?: boolean;
+}
+
+export class HintOptions implements IHintOptions {
+    elementsDisabled = true;
+    defaultPosition = HintConfig.DEFAULT_POSITION;
+    defaultLayer = HintConfig.DEFAULT_PX_LAYER;
+    applyRelative = HintConfig.APPLY_RELATIVE;
+    stepTag = HintConfig.HINT_TAG;
+    dismissOnOverlay = HintConfig.DISMISS_ON_OVERLAY;
+    dismissible = HintConfig.DISMISSIBLE;
 }

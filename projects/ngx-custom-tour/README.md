@@ -68,13 +68,13 @@ Initialize it in your page component
 
   <tour-step selector="highlight-me" [order]="3" position="right" title="title string">
     <!-- ANY HTML HERE
-      NOTE: ONLY selector attribute is required! others is up to you
+      NOTE: ONLY order attribute is required! others is up to you
     -->
   </tour-step>
   ```
   ## NOTE:
 
-  > selector MUST BE unique, so you can highlight Element once
+  > order MUST BE unique
 
 ## Styles
 

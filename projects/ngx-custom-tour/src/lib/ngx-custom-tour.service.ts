@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TourComponent } from './tour.component';
-import { HintOptions } from './options';
+import { HintOptions, IHintOptions } from './options';
 import { HintConfig } from './variables';
 
 export interface Step {
@@ -23,7 +23,7 @@ export class NgxCustomTourService {
   overlay$: Subject<boolean> = new Subject();
   registration$: Subject<boolean> = new Subject();
   finish$: Subject<boolean> = new Subject();
-  showingStep$: Subject<Step> = new Subject();
+  showingStep$: Subject<TourComponent> = new Subject();
 
   /**
    * Initialize hint service
@@ -31,7 +31,7 @@ export class NgxCustomTourService {
    * @param  {HintOptions} options init options
    * @return void
    */
-  public initialize(options: HintOptions = new HintOptions()): void {
+  public initialize(options: IHintOptions = new HintOptions()): void {
     this.hintOptions = (<any>Object).assign(new HintOptions(), options);
     let nodes = document.getElementsByTagName(this.hintOptions.stepTag);
     this.steps = this.initSteps(nodes);
@@ -44,7 +44,7 @@ export class NgxCustomTourService {
    * @param  {Step} step [description]
    */
   public show(step: Step): void {
-    const anchor = this.anchors[step.selector];
+    const anchor = this.anchors[step.order];
     if (!anchor) {
       return;
     }
@@ -55,11 +55,13 @@ export class NgxCustomTourService {
    * @method showNext
    */
   public showNext(): void {
-    this.currentStep = this.steps[this.steps.indexOf(this.currentStep) + 1];
-    const anchor = this.anchors[this.currentStep.selector];
-    if (!anchor) {
+    if (!this.hasNext()) {
+      this.end();
       return;
     }
+    this.anchors[this.currentStep.order].hideStep();
+    this.currentStep = this.steps[this.steps.indexOf(this.currentStep) + 1];
+    const anchor = this.anchors[this.currentStep.order];
     anchor.showStep();
   }
   /**
@@ -67,20 +69,16 @@ export class NgxCustomTourService {
    * @method overlayNext
    */
   public overlayNext(): void {
-    if (this.hasNext()) {
-      this.anchors[this.currentStep.selector].hideStep();
-      this.showNext();
-    } else {
-      this.end();
-    }
+    this.showNext();
   }
   /**
    * Show step previous to {Step} this.currentStep
    * @method showPrev
    */
   public showPrev(): void {
+    this.anchors[this.currentStep.order].hideStep();
     this.currentStep = this.steps[this.steps.indexOf(this.currentStep) - 1];
-    const anchor = this.anchors[this.currentStep.selector];
+    const anchor = this.anchors[this.currentStep.order];
     if (!anchor) {
       return;
     }
@@ -92,8 +90,11 @@ export class NgxCustomTourService {
    * @param  {string}            selector  binded to
    * @param  {TourComponent} component itself
    */
-  public register(selector: string, component: TourComponent): void {
-    this.anchors[selector] = component;
+  public register(component: TourComponent): void {
+    if (this.anchors[component.order]) {
+      throw new Error(`Duplicated step orders. Step's order must be unique.`);
+    }
+    this.anchors[component.order] = component;
     this.registration$.next(true);
   }
   /**
@@ -119,7 +120,7 @@ export class NgxCustomTourService {
    */
   public end(): void {
     this.overlay$.next(false);
-    const anchor = this.anchors[this.currentStep.selector];
+    const anchor = this.anchors[this.currentStep.order];
     if (!anchor) {
       return;
     }
@@ -147,15 +148,11 @@ export class NgxCustomTourService {
     for (let i = 0; i < nodes.length; i++) {
         steps.push({
           selector: nodes[i].getAttribute('ng-reflect-selector') || '',
-          order: parseFloat(nodes[i].getAttribute('ng-reflect-order') || '') || this.hintOptions.defaultOrder,
+          order: parseFloat(nodes[i].getAttribute('ng-reflect-order') || ''),
         });
     }
     return steps = steps.sort((el1, el2) => {
       return el1.order - el2.order;
     });
-  }
-
-  private putOverlay(): void {
-    document.getElementsByTagName('body');
   }
 }
