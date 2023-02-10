@@ -20,7 +20,6 @@ export class NgxCustomTourService {
   steps: Step[] = [];
   hintOptions: HintOptions = new HintOptions();
   anchors: { [selector: string]: TourComponent } = {};
-  overlay$: Subject<boolean> = new Subject();
   registration$: Subject<boolean> = new Subject();
   finish$: Subject<boolean> = new Subject();
   showingStep$: Subject<TourComponent> = new Subject();
@@ -36,8 +35,25 @@ export class NgxCustomTourService {
     let nodes = document.getElementsByTagName(this.hintOptions.stepTag);
     this.steps = this.initSteps(nodes);
     this.startAt(0);
-    this.overlay$.next(true);
-  } 
+  }
+  /**
+   * Refresh highlighted elements
+   * @method updateHighlightedElements
+   * @return void
+   */
+  public updateHighlightedElements(): void {
+    const anchor = this.anchors[this.currentStep.order];
+    anchor.updateHighlightedElements();
+  }
+  /**
+   * Refresh hint position
+   * @method setHintPosition
+   * @return void
+   */
+  public setHintPosition(): void {
+    const anchor = this.anchors[this.currentStep.order];
+    anchor.setHintPosition();
+  }
   /**
    * Show step
    * @method show
@@ -63,13 +79,6 @@ export class NgxCustomTourService {
     this.currentStep = this.steps[this.steps.indexOf(this.currentStep) + 1];
     const anchor = this.anchors[this.currentStep.order];
     anchor.showStep();
-  }
-  /**
-   * On overlay click behaviour
-   * @method overlayNext
-   */
-  public overlayNext(): void {
-    this.showNext();
   }
   /**
    * Show step previous to {Step} this.currentStep
@@ -119,7 +128,6 @@ export class NgxCustomTourService {
    * @method end
    */
   public end(): void {
-    this.overlay$.next(false);
     const anchor = this.anchors[this.currentStep.order];
     if (!anchor) {
       return;

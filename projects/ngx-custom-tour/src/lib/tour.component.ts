@@ -1,8 +1,10 @@
-import { Component, Input, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { tourHintAnimation } from './animations';
+import { getPath, setHintPosition } from './highlight-helper';
 import { NgxCustomTourService } from './ngx-custom-tour.service';
 import { HintConfig } from './variables';
-import { tourHintAnimation } from './animations';
 
 export enum TourStepPosition {
   Top = 'top',
@@ -19,7 +21,7 @@ export enum TourStepPosition {
   [@tourHintAnimation]="{value: transformStart, params: { transformStart: transformStart, transformEnd: transformEnd}}">
     <div class="header" *ngIf="title">
         {{title}}
-        <a *ngIf="dismissible" class="header-btn__close scalable" (click)="exit()">&#10006;</a>
+        <a *ngIf="hasCloseButton" class="header-btn__close scalable" (click)="exit()">&#10006;</a>
     </div>
     <div class="content"><ng-content></ng-content></div>
     <div class="footer" *ngIf="isFooterVisible">
@@ -27,15 +29,25 @@ export enum TourStepPosition {
       <a class="navigate-btn navigate-btn__next scalable" *ngIf="hasNext" (click)="next()">{{nextButtonText}}</a>
       <a class="navigate-btn navigate-btn__finish scalable" *ngIf="!hasNext" (click)="exit()">{{finishButtonText}}</a>
     </div>
+  </div>
+  <div
+    *ngIf="showme"
+    class="overlay"
+    (click)="hintService.hintOptions.dismissOnOverlay ? exit() : next()"
+    [ngStyle]="{ 'pointer-events': hintService.hintOptions.elementsDisabled ? 'auto' : 'none' }"
+  >
+    <svg>
+      <svg:path [attr.d]="path"></svg:path>
+    </svg>
   </div>`,
   animations: [tourHintAnimation]
 })
-export class TourComponent implements OnInit {
+export class TourComponent implements OnInit, OnChanges {
   @Input() title: string = '';
   @Input() selector?: string | string[];
   @Input() order: number = 0;
   @Input() position: string = TourStepPosition.Bottom;
-  @Input() public dismissible: boolean = true;
+  @Input() public hasCloseButton: boolean = true;
   @Input() isFooterVisible: boolean = true;
   @Input() customCss: string = '';
   @Input() prevButtonText?: string = '←';
@@ -53,39 +65,39 @@ export class TourComponent implements OnInit {
   transformEnd: boolean | string = 'translateX(-50%) translateY(-100%)';
   transformY: boolean = false;
   transformX: boolean = false;
+  path: string = '';
   constructor(public hintService: NgxCustomTourService,
               @Inject(DOCUMENT) private document: Document) {
   }
 
   ngOnInit(): void {
     this.hintService.register(this);
-    switch (typeof this.selector) {
-      case 'string':
-        const elements = this.document.querySelectorAll<HTMLElement>(this.selector);
-        elements.forEach(element => this.highlightedElements.push(element));
-        break;
+    fromEvent(window, 'resize').subscribe({
+      next: () => {
+        if (this.showme) {
+          this.setHintPosition();
+          this.hightlightElements();
+        }
+      }
+    });
 
-      case 'object':
-        this.selector.map(selector => {
-          const elements = this.document.querySelectorAll<HTMLElement>(selector);
-          elements.forEach(element => this.highlightedElements.push(element));
-        });
-        break;
-
-      default:
-        break;
-    }
+    fromEvent(window, 'scroll').subscribe({
+      next: () => {
+        if (this.showme) {
+          this.hightlightElements();
+        }
+      }
+    });
   }
 
   showStep(): void {
+    this.getHighlightedElements();
     this.hintService.showingStep$.next(this);
-    this.dismissible = this.dismissible || this.hintService.hintOptions.dismissible;
+    this.hasCloseButton = this.hasCloseButton || this.hintService.hintOptions.hasCloseButton;
     this.position = this.position || this.hintService.hintOptions.defaultPosition;
     this.order = +this.order;
-    const highlightedElement = this.highlightedElements[0];
-
     this.hightlightElements();
-
+    const highlightedElement = this.highlightedElements[0];
     if (highlightedElement) {
       if (this.hintService.hintOptions.elementsDisabled) {
         this.disableClick(highlightedElement);
@@ -94,56 +106,12 @@ export class TourComponent implements OnInit {
       if (this.hintService.hintOptions.applyRelative) {
         highlightedElement.classList.add('hint-relative');
       }
-
-      switch (this.position) {
-        case TourStepPosition.Top:
-          this.transformClass = 'transformX_50 transformY_100';
-          this.transformStart = 'translateX(-50%) translateY(-60%)';
-          this.transformEnd = 'translateX(-50%) translateY(-100%)';
-          this.topPos = highlightedElement.offsetTop - this.hintService.hintOptions.defaultLayer;
-          this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth / 2;
-          break;
-        case TourStepPosition.Bottom:
-          this.transformClass = 'transformX_50';
-          this.transformStart = 'translateX(-50%) translateY(-20%)';
-          this.transformEnd = 'translateX(-50%) translateY(0%)';
-          this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight + this.hintService.hintOptions.defaultLayer;
-          this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth / 2;
-          break;
-        case TourStepPosition.Left:
-          this.transformClass = 'transformY_50 transformX_100';
-          this.transformStart = 'translateY(-50%) translateX(-75%)';
-          this.transformEnd = 'translateY(-50%) translateX(-100%)';
-          this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-          this.leftPos = highlightedElement.offsetLeft - this.hintService.hintOptions.defaultLayer;
-          break;
-        case TourStepPosition.Right:
-          this.transformClass = 'transformY_50';
-          this.transformStart = 'translateY(-50%) translateX(-10%)';
-          this.transformEnd = 'translateY(-50%) translateX(0%)';
-          this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-          this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth + this.hintService.hintOptions.defaultLayer;
-          break;
-        case TourStepPosition.Neutral:
-          this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-          this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth + this.hintService.hintOptions.defaultLayer;
-          this.transformClass = this.customCss;
-          break;
-        default:
-          throw 'Invalid hint position ->' + this.position;
-      }
-    } else {
-      this.transformClass = 'transformY_50 transformX_50';
-      this.transformStart = 'translateY(50%) translateX(-50%)';
-      this.transformEnd = 'translateY(-50%) translateX(-50%)';
-      this.topPos = window.innerHeight / 2;
-      this.leftPos = window.innerWidth / 2;
     }
+    this.setHintPosition();
 
     this.showme = true;
     this.hasNext = this.hintService.hasNext();
     this.hasPrev = this.hintService.hasPrev();
-
   }
 
   hideStep(): void {
@@ -166,15 +134,13 @@ export class TourComponent implements OnInit {
   private disableClick(element: HTMLElement): void {
     element.classList.add('hint-disabled');
   }
+
   private enableClick(element: HTMLElement): void {
     element.classList.remove('hint-disabled');
   }
 
   private hightlightElements(): void {
-    this.highlightedElements.map(highlightedElement => {
-      highlightedElement.style.zIndex = HintConfig.Z_INDEX;
-      highlightedElement.classList.add('tour-hint-hightlight');
-    });
+    this.path = getPath(this.highlightedElements);
   }
 
   private removeHightlighting(): void {
@@ -184,5 +150,45 @@ export class TourComponent implements OnInit {
       highlightedElement.classList.remove('tour-hint-hightlight');
       highlightedElement.classList.remove('hint-relative');
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selector']) {
+      this.showme ? this.updateHighlightedElements() : this.getHighlightedElements();
+    }
+  }
+
+  public updateHighlightedElements(): void {
+    this.removeHightlighting();
+    this.showStep();
+  }
+
+  private getHighlightedElements(): void {
+    this.highlightedElements = [];
+    switch (typeof this.selector) {
+      case 'string':
+        const elements = this.document.querySelectorAll<HTMLElement>(this.selector);
+        elements.forEach(element => this.highlightedElements.push(element));
+        break;
+
+      case 'object':
+        this.selector.map(selector => {
+          const elements = this.document.querySelectorAll<HTMLElement>(selector);
+          elements.forEach(element => this.highlightedElements.push(element));
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  public setHintPosition(): void {
+    const { transformClass, transformStart, transformEnd, topPos, leftPos } = setHintPosition(this.position, this.highlightedElements, this.hintService, this.customCss);
+    this.transformClass = transformClass;
+    this.transformStart = transformStart;
+    this.transformEnd = transformEnd;
+    this.topPos = topPos;
+    this.leftPos = leftPos;
   }
 }

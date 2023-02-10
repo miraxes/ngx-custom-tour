@@ -7,7 +7,7 @@ export interface IHintOptions {
     applyRelative?: boolean;
     stepTag?: string;
     dismissOnOverlay?: boolean;
-    dismissible?: boolean;
+    hasCloseButton?: boolean;
 }
 
 export class HintOptions implements IHintOptions {
@@ -17,5 +17,5 @@ export class HintOptions implements IHintOptions {
     applyRelative = HintConfig.APPLY_RELATIVE;
     stepTag = HintConfig.HINT_TAG;
     dismissOnOverlay = HintConfig.DISMISS_ON_OVERLAY;
-    dismissible = HintConfig.DISMISSIBLE;
+    hasCloseButton = HintConfig.HAS_CLOSE_BUTTON;
 }
