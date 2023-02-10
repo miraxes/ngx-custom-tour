@@ -1,19 +1,26 @@
 import { NgxCustomTourService } from "./ngx-custom-tour.service";
-import { TourStepPosition } from "./tour.component";
+
+export enum TourStepPosition {
+  Top = 'top',
+  Bottom = 'bottom',
+  Left = 'left',
+  Right = 'right',
+  Neutral = 'neutral',
+}
 
 export const getPath = (elements: HTMLElement[]): string => {
   const { innerWidth, innerHeight } = window;
 
   const points: string[] = elements.map(element => {
     const { left, top, width, height } = element.getBoundingClientRect();
-  
+
     const edges = {
       top: top,
       right: left + width,
       bottom: top + height,
       left: left,
     }
-    
+
     const pointsPath = {
       leftTop: `M${edges.left},${edges.top} Q${edges.left},${edges.top} ${edges.left},${edges.top}`,
       rightTop: `V${edges.top} Q${edges.right},${edges.top} ${edges.right},${edges.top}`,
@@ -28,7 +35,7 @@ export const getPath = (elements: HTMLElement[]): string => {
       ${pointsPath.rightTop}
     `;
   });
-  
+
   return `
     M${innerWidth},${innerHeight}
     H0V0

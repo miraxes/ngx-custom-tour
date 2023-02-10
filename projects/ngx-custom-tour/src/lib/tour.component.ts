@@ -2,17 +2,9 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { tourHintAnimation } from './animations';
-import { getPath, setHintPosition } from './highlight-helper';
+import { getPath, setHintPosition, TourStepPosition } from './highlight-helper';
 import { NgxCustomTourService } from './ngx-custom-tour.service';
 import { HintConfig } from './variables';
-
-export enum TourStepPosition {
-  Top = 'top',
-  Bottom = 'bottom',
-  Left = 'left',
-  Right = 'right',
-  Neutral = 'neutral',
-}
 
 @Component({
   selector: `${HintConfig.HINT_TAG}[order]`,
