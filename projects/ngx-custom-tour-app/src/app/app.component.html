@@ -392,7 +392,7 @@
       <span>New Component</span>
     </button>
 
-    <button class="card card-small class1" (click)="selection.value = 'material'" tabindex="0">
+    <button id="id6" class="card card-small class1" (click)="selection.value = 'material'" tabindex="0">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       <span>Angular Material</span>
     </button>
@@ -402,12 +402,12 @@
       <span>Add PWA Support</span>
     </button>
 
-    <button class="card card-small class1" (click)="selection.value = 'dependency'" tabindex="0">
+    <button id="id5" class="card card-small class1" (click)="selection.value = 'dependency'" tabindex="0">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       <span>Add Dependency</span>
     </button>
 
-    <button id="id3" class="card card-small" (click)="selection.value = 'test'" tabindex="0">
+    <button id="id3" class="card card-small" (click)="selection.value = 'test'" tabindex="0" *ngIf="isId3Visible">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       <span>Run and Watch Tests</span>
     </button>
@@ -489,7 +489,7 @@
   </svg>
 
 </div>
-<ngx-custom-tour-overlay></ngx-custom-tour-overlay>
+<!-- <ngx-custom-tour-overlay></ngx-custom-tour-overlay> -->
 
 <!-- start TOUR -->
 <button name="button" (click)="startTour()"> START!</button>
@@ -501,10 +501,15 @@
   <iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY">
 </iframe>
 </tour-step>
-<tour-step [selector]="['#id3', '#id4']" [order]="3" position="bottom" title="title 2222">
+<tour-step [selector]="highlighted" [order]="3" position="bottom" title="title 2222">
   TRSHASDAS
+  <button (click)="updateTour()">Update</button>
 </tour-step>
-<tour-step selector=".class1" [order]="4" position="top" title="title 2222">
+<tour-step selector="#id3" [order]="4" position="top" title="title 2222">
+  Lorem ipsum dolor sit.
+  <button (click)="showId3()">Show id3</button>
+</tour-step>
+<tour-step selector=".class1" [order]="5" position="top" title="title 2222">
   Lorem ipsum dolor sit.
 </tour-step>
 

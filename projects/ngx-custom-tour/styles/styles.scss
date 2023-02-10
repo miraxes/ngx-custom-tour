@@ -11,16 +11,6 @@ $ct-secondary-lighten: lighten($ct-secondary-color, 10%);
 $ct-secondary-darker: lighten($ct-secondary-color, 5%);
 $ct-secondary-medium: darken($ct-secondary-color, 20%);
 
-.hint-overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: var(--step-overlay-background, $ct-overlay-opacity);
-    z-index: 20;
-    top: 0;
-    left: 0;
-  }
-
 .scalable {
   transition: all .2s ease-in-out;
   &:hover {
@@ -34,8 +24,10 @@ $ct-secondary-medium: darken($ct-secondary-color, 20%);
     z-index: var(--step-z-index, 999);
     text-align: var(--step-align, center);
     font-size: $ct-header-font-size;
-    min-width: $ct-container-min-width;
     border-radius: var(--step-border-radius, 5px);
+    min-width: var(--step-min-width, $ct-container-min-width);
+    max-width: var(--step-max-width, none);
+    width: var(--step-width, auto);
     box-shadow: var(--step-box-shadow, inset 0 0 30px 0 rgba(#000, .5));
 
     .header {
@@ -132,3 +124,18 @@ $ct-secondary-medium: darken($ct-secondary-color, 20%);
     position: relative;
   }
   
+.overlay {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: calc(var(--step-z-index, 999) - 1);
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    fill: var(--step-overlay-background, $ct-overlay-opacity);
+  }
+}
