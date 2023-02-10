@@ -15,7 +15,7 @@ For versions less than Angular v6, please use older version of this library.
 | v14               | 1.0.1       |
 
 ## Breaking change
-Starting from 1.x.x selector is not required anymore.
+Starting from 1.x.x `selector` is not required anymore.
 Instead we have `order` which REQUIRED and must be UNIQUE.
 
 # Usage
@@ -62,9 +62,6 @@ Initialize it in your page component
   ```
 
   ```html
-  <!-- Bluring element insert on top of the page-->
-  <ngx-custom-tour-overlay></ngx-custom-tour-overlay>
-
   <!-- start TOUR -->
   <button name="button" (click)="startTour()"> START!</button>
 
