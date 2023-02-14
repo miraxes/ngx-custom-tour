@@ -155,12 +155,22 @@ export class NgxCustomTourService {
     let steps: Step[] = [];
     for (let i = 0; i < nodes.length; i++) {
         steps.push({
-          selector: nodes[i].getAttribute('ng-reflect-selector') || '',
-          order: parseFloat(nodes[i].getAttribute('ng-reflect-order') || ''),
+          selector: nodes[i].getAttribute('ng-reflect-selector') || this.getSelectorFromClassName('selector', nodes[i]) ||'',
+          order: parseFloat(nodes[i].getAttribute('ng-reflect-order') || this.getSelectorFromClassName('order', nodes[i]) || '') || i,
         });
     }
     return steps = steps.sort((el1, el2) => {
       return el1.order - el2.order;
     });
+  }
+
+  private getSelectorFromClassName(selector: string, node: Element) {
+    let result;
+    node.classList.forEach(klass => {
+      if (klass.startsWith(`${selector}-`)) {
+        result = klass.split(`${selector}-`)[1];
+      }
+    })
+    return result;
   }
 }
