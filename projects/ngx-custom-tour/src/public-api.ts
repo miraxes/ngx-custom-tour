@@ -5,3 +5,4 @@
 export * from './lib/ngx-custom-tour.service';
 export * from './lib/tour.component';
 export * from './lib/ngx-custom-tour.module';
+export { TourStepPosition } from './lib/highlight-helper';

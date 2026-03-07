@@ -1,57 +1,58 @@
 {
   "name": "ngx-custom-tour",
-  "version": "0.1.0",
-  "description": "Easy to customize Angular 6+ tour",
+  "version": "2.15.1",
+  "description": "Easy to customize Angular 15+ tour",
   "author": "Miraxes",
   "repository": {
     "type": "git",
-    "url": "https://github.com/miraxes/ngx-custom-tour"
+    "url": "git+https://github.com/miraxes/ngx-custom-tour.git"
   },
   "license": "MIT",
   "keywords": [
-    "angular6",
-    "angular7",
-    "angular8",
-    "angular9",
+    "angular15",
+    "angular16",
     "ng",
     "ngx",
     "hint",
     "step",
-    "tour"
+    "tour",
+    "onboarding"
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "ng serve ngx-custom-tour-app",
+    "build": "ng build ngx-custom-tour",
+    "build:app": "ng build ngx-custom-tour-app",
+    "watch": "ng build ngx-custom-tour --watch --configuration development",
+    "test": "ng test ngx-custom-tour",
+    "publish:lib": "npm run build && cd dist/ngx-custom-tour && npm publish"
   },
   "dependencies": {
-    "@angular/animations": "^14.2.12",
-    "@angular/common": "^14.2.12",
-    "@angular/compiler": "^14.2.12",
-    "@angular/core": "^14.2.12",
-    "@angular/forms": "^14.2.12",
-    "@angular/platform-browser": "^14.2.12",
-    "@angular/platform-browser-dynamic": "^14.2.12",
-    "@angular/router": "^14.2.12",
-    "rxjs": "~6.6.0",
+    "@angular/animations": "15.2.10",
+    "@angular/common": "15.2.10",
+    "@angular/compiler": "15.2.10",
+    "@angular/core": "15.2.10",
+    "@angular/forms": "15.2.10",
+    "@angular/platform-browser": "15.2.10",
+    "@angular/platform-browser-dynamic": "15.2.10",
+    "@angular/router": "15.2.10",
+    "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.12.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.2.10",
-    "@angular/cli": "^14.2.10",
-    "@angular/compiler-cli": "^14.2.12",
-    "@types/jasmine": "~3.8.0",
-    "@types/node": "^12.11.1",
-    "jasmine-core": "~3.8.0",
-    "karma": "~6.3.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.0.3",
-    "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "~1.7.0",
-    "ng-packagr": "^14.2.2",
-    "typescript": "~4.6.4"
+    "@angular-devkit/build-angular": "15.2.10",
+    "@angular/cli": "15.2.10",
+    "@angular/compiler-cli": "15.2.10",
+    "@types/jasmine": "~4.3.0",
+    "@types/node": "^18.18.0",
+    "jasmine-core": "~4.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "ng-packagr": "15.2.1",
+    "typescript": "~4.8.4"
   }
 }

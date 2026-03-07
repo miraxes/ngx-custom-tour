@@ -13,6 +13,7 @@ For versions less than Angular v6, please use older version of this library.
 | below v12         | 0.1.6       |
 | v13               | 0.1.7       |
 | v14               | 1.1.0       |
+| v15               | 2.15.0      |
 
 ## Breaking change
 Starting from 1.x.x `selector` is not required anymore.

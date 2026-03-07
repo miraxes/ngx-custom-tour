@@ -31,7 +31,8 @@ export class NgxCustomTourService {
    * @return void
    */
   public initialize(options: IHintOptions = new HintOptions()): void {
-    this.hintOptions = (<any>Object).assign(new HintOptions(), options);
+    const defaults = new HintOptions();
+    this.hintOptions = { ...defaults, ...options };
     let nodes = document.getElementsByTagName(this.hintOptions.stepTag);
     this.steps = this.initSteps(nodes);
     this.startAt(0);
