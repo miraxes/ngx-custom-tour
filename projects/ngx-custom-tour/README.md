@@ -234,4 +234,4 @@ $ct-primary-color: #1976d2;
 
 ---
 
-This library supports Angular 15–20. For suggestions or issues, open a ticket on [GitHub](https://github.com/miraxes/ngx-custom-tour).
+This library supports Angular 15–20. See [CHANGELOG](https://github.com/miraxes/ngx-custom-tour/blob/main/CHANGELOG.md) for release notes. For suggestions or issues, open a ticket on [GitHub](https://github.com/miraxes/ngx-custom-tour).
