@@ -8,7 +8,6 @@ import { HintConfig } from './variables';
 
 @Component({
   selector: `${HintConfig.HINT_TAG}[order]`,
-  standalone: true,
   imports: [],
   templateUrl: './tour.component.html',
   animations: [tourHintAnimation]

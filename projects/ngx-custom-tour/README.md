@@ -1,6 +1,6 @@
 # ngx-custom-tour
 
-Easy to customize step-by-step tour / onboarding for Angular 15+.
+Easy to customize step-by-step tour / onboarding for Angular 15+ (v15–v19).
 
 [![Downloads](https://img.shields.io/npm/dt/ngx-custom-tour.svg?style=flat-square)](https://www.npmjs.com/package/ngx-custom-tour)
 [![Versions](https://img.shields.io/npm/v/ngx-custom-tour.svg?style=flat-square)](https://www.npmjs.com/package/ngx-custom-tour)
@@ -14,6 +14,7 @@ Easy to customize step-by-step tour / onboarding for Angular 15+.
 | v16      | 2.16.0   |
 | v17      | 2.17.0   |
 | v18      | 2.18.0   |
+| v19      | 2.19.0   |
 
 Install the library version that matches your Angular major version.
 
@@ -232,4 +233,4 @@ $ct-primary-color: #1976d2;
 
 ---
 
-This library supports Angular 15–18. For suggestions or issues, open a ticket on [GitHub](https://github.com/miraxes/ngx-custom-tour).
+This library supports Angular 15–19. For suggestions or issues, open a ticket on [GitHub](https://github.com/miraxes/ngx-custom-tour).

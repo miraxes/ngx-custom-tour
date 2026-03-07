@@ -1,7 +1,7 @@
 {
   "name": "ngx-custom-tour",
-  "version": "2.18.0",
-  "description": "Easy to customize Angular 18+ tour",
+  "version": "2.19.0",
+  "description": "Easy to customize Angular 19+ tour",
   "author": "Miraxes",
   "repository": {
     "type": "git",
@@ -9,8 +9,8 @@
   },
   "license": "MIT",
   "keywords": [
-    "angular18",
     "angular19",
+    "angular20",
     "ng",
     "ngx",
     "hint",
@@ -28,22 +28,22 @@
     "publish:lib": "npm run build && cd dist/ngx-custom-tour && npm publish"
   },
   "dependencies": {
-    "@angular/animations": "18.2.12",
-    "@angular/common": "18.2.12",
-    "@angular/compiler": "18.2.12",
-    "@angular/core": "18.2.12",
-    "@angular/forms": "18.2.12",
-    "@angular/platform-browser": "18.2.12",
-    "@angular/platform-browser-dynamic": "18.2.12",
-    "@angular/router": "18.2.12",
+    "@angular/animations": "19.2.12",
+    "@angular/common": "19.2.12",
+    "@angular/compiler": "19.2.12",
+    "@angular/core": "19.2.12",
+    "@angular/forms": "19.2.12",
+    "@angular/platform-browser": "19.2.12",
+    "@angular/platform-browser-dynamic": "19.2.12",
+    "@angular/router": "19.2.12",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.10"
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "18.2.10",
-    "@angular/cli": "18.2.10",
-    "@angular/compiler-cli": "18.2.12",
+    "@angular-devkit/build-angular": "19.2.12",
+    "@angular/cli": "19.2.12",
+    "@angular/compiler-cli": "19.2.12",
     "@types/jasmine": "~4.3.0",
     "@types/node": "^20.0.0",
     "jasmine-core": "~4.6.0",
@@ -52,7 +52,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "ng-packagr": "18.0.0",
-    "typescript": "~5.4.5"
+    "ng-packagr": "19.2.2",
+    "typescript": "~5.5.4"
   }
 }

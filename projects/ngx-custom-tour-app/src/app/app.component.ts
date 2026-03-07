@@ -4,7 +4,6 @@ import { NgxCustomTourModule, NgxCustomTourService, TourStepPosition } from 'ngx
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [RouterOutlet, NgxCustomTourModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
