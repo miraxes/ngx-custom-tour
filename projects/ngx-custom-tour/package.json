@@ -1,7 +1,7 @@
 {
   "name": "ngx-custom-tour",
-  "version": "2.15.1",
-  "description": "Easy to customize Angular 15+ tour",
+  "version": "2.18.0",
+  "description": "Easy to customize Angular 18+ tour",
   "author": "Miraxes",
   "repository": {
     "type": "git",
@@ -9,8 +9,8 @@
   },
   "license": "MIT",
   "keywords": [
-    "angular15",
-    "angular16",
+    "angular18",
+    "angular19",
     "ng",
     "ngx",
     "hint",
@@ -26,9 +26,9 @@
     "test": "ng test"
   },
   "peerDependencies": {
-    "@angular/animations": "^15.0.0",
-    "@angular/common": "^15.0.0",
-    "@angular/core": "^15.0.0"
+    "@angular/animations": "^18.0.0",
+    "@angular/common": "^18.0.0",
+    "@angular/core": "^18.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

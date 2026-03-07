@@ -1,0 +1,40 @@
+@if (showme) {
+  <div class="intro-tour-hint-wrapper {{transformClass}} step{{ displayOrder() }} {{ displayPosition() }}"
+    [style.top.px]="topPos"
+    [style.left.px]="leftPos"
+    [@tourHintAnimation]="animationState">
+    @if (title()) {
+      <div class="header">
+        {{ title() }}
+        @if (displayHasCloseButton()) {
+          <a class="header-btn__close scalable" (click)="exit()">&#10006;</a>
+        }
+      </div>
+    }
+    <div class="content"><ng-content></ng-content></div>
+    @if (isFooterVisible()) {
+      <div class="footer">
+        @if (hasPrev) {
+          <a class="navigate-btn navigate-btn__previous scalable" (click)="prev()">{{ prevButtonText() }}</a>
+        }
+        @if (hasNext) {
+          <a class="navigate-btn navigate-btn__next scalable" (click)="next()">{{ nextButtonText() }}</a>
+        }
+        @if (!hasNext) {
+          <a class="navigate-btn navigate-btn__finish scalable" (click)="exit()">{{ finishButtonText() }}</a>
+        }
+      </div>
+    }
+  </div>
+}
+@if (showme) {
+  <div
+    class="overlay"
+    (click)="hintService.hintOptions.dismissOnOverlay ? exit() : next()"
+    [style.pointer-events]="hintService.hintOptions.elementsDisabled ? 'auto' : 'none'"
+  >
+    <svg>
+      <svg:path [attr.d]="path"></svg:path>
+    </svg>
+  </div>
+}

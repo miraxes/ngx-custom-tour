@@ -101,10 +101,11 @@ export class NgxCustomTourService {
    * @param  {TourComponent} component itself
    */
   public register(component: TourComponent): void {
-    if (this.anchors[component.order]) {
+    const order = component.order();
+    if (this.anchors[order]) {
       throw new Error(`Duplicated step orders. Step's order must be unique.`);
     }
-    this.anchors[component.order] = component;
+    this.anchors[order] = component;
     this.registration$.next(true);
   }
   /**

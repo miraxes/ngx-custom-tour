@@ -138,7 +138,6 @@
       }
     }
   },
-  "defaultProject": "ngx-custom-tour",
   "cli": {
     "analytics": false
   }

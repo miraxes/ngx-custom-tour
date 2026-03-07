@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { tourHintAnimation } from './animations';
 import { getPath, setHintPosition, TourStepPosition } from './highlight-helper';
@@ -8,58 +8,60 @@ import { HintConfig } from './variables';
 
 @Component({
   selector: `${HintConfig.HINT_TAG}[order]`,
-  template: `<div class="intro-tour-hint-wrapper {{transformClass}} step{{order}} {{position}}"
-  *ngIf="showme" [ngStyle]="{'top': topPos+'px', 'left': leftPos+'px'}"
-  [@tourHintAnimation]="{value: transformStart, params: { transformStart: transformStart, transformEnd: transformEnd}}">
-    <div class="header" *ngIf="title">
-        {{title}}
-        <a *ngIf="hasCloseButton" class="header-btn__close scalable" (click)="exit()">&#10006;</a>
-    </div>
-    <div class="content"><ng-content></ng-content></div>
-    <div class="footer" *ngIf="isFooterVisible">
-      <a class="navigate-btn navigate-btn__previous scalable" *ngIf="hasPrev" (click)="prev()">{{prevButtonText}}</a>
-      <a class="navigate-btn navigate-btn__next scalable" *ngIf="hasNext" (click)="next()">{{nextButtonText}}</a>
-      <a class="navigate-btn navigate-btn__finish scalable" *ngIf="!hasNext" (click)="exit()">{{finishButtonText}}</a>
-    </div>
-  </div>
-  <div
-    *ngIf="showme"
-    class="overlay"
-    (click)="hintService.hintOptions.dismissOnOverlay ? exit() : next()"
-    [ngStyle]="{ 'pointer-events': hintService.hintOptions.elementsDisabled ? 'auto' : 'none' }"
-  >
-    <svg>
-      <svg:path [attr.d]="path"></svg:path>
-    </svg>
-  </div>`,
+  standalone: true,
+  imports: [],
+  templateUrl: './tour.component.html',
   animations: [tourHintAnimation]
 })
-export class TourComponent implements OnInit, OnChanges {
-  @Input() title: string = '';
-  @Input() selector?: string | string[];
-  @Input() order: number = 0;
-  @Input() position: string = TourStepPosition.Bottom;
-  @Input() public hasCloseButton: boolean = true;
-  @Input() isFooterVisible: boolean = true;
-  @Input() customCss: string = '';
-  @Input() prevButtonText?: string = '←';
-  @Input() nextButtonText?: string = '→';
-  @Input() finishButtonText?: string = 'Finish';
+export class TourComponent implements OnInit {
+  private readonly document = inject(DOCUMENT);
+  readonly hintService = inject(NgxCustomTourService);
 
-  showme: boolean = false;
-  hasNext: boolean = false;
-  hasPrev: boolean = false;
-  topPos: number = 1;
-  leftPos: number = 1;
+  readonly title = input('');
+  readonly selector = input<string | string[] | undefined>(undefined);
+  readonly order = input(0, { transform: (v: number) => +v });
+  readonly position = input<string>(TourStepPosition.Bottom);
+  readonly hasCloseButton = input(true);
+  readonly isFooterVisible = input(true);
+  readonly customCss = input('');
+  readonly prevButtonText = input('←');
+  readonly nextButtonText = input('→');
+  readonly finishButtonText = input('Finish');
+
+  readonly displayPosition = signal<string>(TourStepPosition.Bottom);
+  readonly displayOrder = signal(0);
+  readonly displayHasCloseButton = signal(true);
+
+  showme = false;
+  hasNext = false;
+  hasPrev = false;
+  topPos = 1;
+  leftPos = 1;
   highlightedElements: HTMLElement[] = [];
-  transformClass: string = 'transformX_50 transformY_100';
+  transformClass = 'transformX_50 transformY_100';
   transformStart: boolean | string = 'translateX(-50%) translateY(-60%)';
   transformEnd: boolean | string = 'translateX(-50%) translateY(-100%)';
-  transformY: boolean = false;
-  transformX: boolean = false;
-  path: string = '';
-  constructor(public hintService: NgxCustomTourService,
-              @Inject(DOCUMENT) private document: Document) {
+  path = '';
+
+  constructor() {
+    effect(() => {
+      this.selector();
+      if (this.showme) {
+        this.updateHighlightedElements();
+      } else {
+        this.getHighlightedElements();
+      }
+    }, { allowSignalWrites: true });
+  }
+
+  get animationState(): { value: boolean | string; params: { transformStart: string; transformEnd: string } } {
+    return {
+      value: this.transformStart,
+      params: {
+        transformStart: String(this.transformStart),
+        transformEnd: String(this.transformEnd)
+      }
+    };
   }
 
   ngOnInit(): void {
@@ -85,9 +87,9 @@ export class TourComponent implements OnInit, OnChanges {
   showStep(): void {
     this.getHighlightedElements();
     this.hintService.showingStep$.next(this);
-    this.hasCloseButton = this.hasCloseButton || this.hintService.hintOptions.hasCloseButton;
-    this.position = this.position || this.hintService.hintOptions.defaultPosition;
-    this.order = +this.order;
+    this.displayHasCloseButton.set(this.hasCloseButton() || this.hintService.hintOptions.hasCloseButton);
+    this.displayPosition.set(this.position() || this.hintService.hintOptions.defaultPosition);
+    this.displayOrder.set(this.order());
     this.hightlightElements();
     const highlightedElement = this.highlightedElements[0];
     if (highlightedElement) {
@@ -136,7 +138,7 @@ export class TourComponent implements OnInit, OnChanges {
   }
 
   private removeHightlighting(): void {
-    this.highlightedElements.map(highlightedElement => {
+    this.highlightedElements.forEach(highlightedElement => {
       highlightedElement.style.zIndex = '0';
       this.enableClick(highlightedElement);
       highlightedElement.classList.remove('tour-hint-hightlight');
@@ -144,39 +146,40 @@ export class TourComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selector']) {
-      this.showme ? this.updateHighlightedElements() : this.getHighlightedElements();
-    }
-  }
-
-  public updateHighlightedElements(): void {
+  updateHighlightedElements(): void {
     this.removeHightlighting();
     this.showStep();
   }
 
   private getHighlightedElements(): void {
     this.highlightedElements = [];
-    switch (typeof this.selector) {
-      case 'string':
-        const elements = this.document.querySelectorAll<HTMLElement>(this.selector);
+    const sel = this.selector();
+    switch (typeof sel) {
+      case 'string': {
+        const elements = this.document.querySelectorAll<HTMLElement>(sel);
         elements.forEach(element => this.highlightedElements.push(element));
         break;
-
+      }
       case 'object':
-        this.selector.map(selector => {
-          const elements = this.document.querySelectorAll<HTMLElement>(selector);
-          elements.forEach(element => this.highlightedElements.push(element));
-        });
+        if (sel) {
+          sel.forEach(s => {
+            const elements = this.document.querySelectorAll<HTMLElement>(s);
+            elements.forEach(element => this.highlightedElements.push(element));
+          });
+        }
         break;
-
       default:
         break;
     }
   }
 
-  public setHintPosition(): void {
-    const { transformClass, transformStart, transformEnd, topPos, leftPos } = setHintPosition(this.position, this.highlightedElements, this.hintService, this.customCss);
+  setHintPosition(): void {
+    const { transformClass, transformStart, transformEnd, topPos, leftPos } = setHintPosition(
+      this.displayPosition(),
+      this.highlightedElements,
+      this.hintService,
+      this.customCss()
+    );
     this.transformClass = transformClass;
     this.transformStart = transformStart;
     this.transformEnd = transformEnd;

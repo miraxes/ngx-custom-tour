@@ -1,35 +1,41 @@
-import { Component } from '@angular/core';
-import { NgxCustomTourService, TourStepPosition } from '../../../ngx-custom-tour/src/public-api';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { NgxCustomTourModule, NgxCustomTourService, TourStepPosition } from 'ngx-custom-tour';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, NgxCustomTourModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  readonly hintService = inject(NgxCustomTourService);
+
   title = 'ngx-custom-tour-app';
   tourStepPosition = TourStepPosition;
   highlighted = ['#id4'];
   isId3Visible = false;
-  constructor(public hintService: NgxCustomTourService) {
+  selectionValue = '';
 
-  }
-  
-  startTour() {
+  startTour(): void {
     this.hintService.initialize({
-      dismissOnOverlay: false,
-      // elementsDisabled: false,
+      dismissOnOverlay: false
     });
   }
 
-  updateTour() {
+  updateTour(): void {
     this.highlighted = ['#id5'];
   }
 
-  showId3() {
+  showId3(): void {
     this.isId3Visible = true;
     setTimeout(() => {
       this.hintService.updateHighlightedElements();
     }, 100);
+  }
+
+  setSelection(value: string): void {
+    this.selectionValue = value;
   }
 }
